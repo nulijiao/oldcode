@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义选择按钮</title>
+    <style>
+        body{
+            background: #ccc;
+        }  body{
+
+
+               perspective:1000px;
+               perspective-origin: 50% 45%;
+               /*因为要看儿子的透视效果*/
+               /*在旋转过程中发生巨大的变化就是因为  perspective-origin: 50% 45%;视点*/
+           }
+        #container{
+            width: 200px;
+            height: 200px;
+            margin:200px auto;
+            /*background-color:red;*/
+            transform-style: preserve-3d;
+            /*因为他的儿子做3D变化，所以为了区分他和儿子的3D效果*/
+            position:relative;
+            animation:cube  2s  linear infinite ;
+
+            /*animation-direction:alternate;*/
+            transition: all 2s  linear;
+
+        }
+        @keyframes cube {
+
+            from{
+                /*transform: rotateY(0deg);*/
+            }
+            to{
+                transform: rotateY(-360deg);
+            }
+
+        }
+        #container div{
+            width: 200px;
+            height: 200px;
+            background-color: darkgray;
+            opacity:0.5;
+            font-size:80px;
+            line-height:200px;
+            text-align: center;
+            position: absolute;
+
+
+        }
+        #t1{
+            z-index: 1;
+            transform:  rotateY(180deg) translateZ(100px);
+        }
+
+        #t6{
+            z-index: 1;
+            transform: translateZ(100px);
+        }
+        #t2{
+            transform: rotateX(90deg)    translateZ(100px);
+        }
+        #t5 {
+            transform: rotateX(-90deg) translateZ(100px) ;
+        }
+        #t4{
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+        #t3{
+            transform: rotateY(90deg) translateZ(100px);
+        }
+
+        *{
+            margin:0;
+            border:0;
+            padding:0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div class="cube" id="t1">1</div>
+    <div class="cube" id="t2">2</div>
+    <div class="cube" id="t3">3</div>
+    <div  id="t4">4</div>
+    <div  id="t5">5</div>
+    <div  id="t6">6</div>
+</div>
+</body>
+</html>

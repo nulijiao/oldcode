@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="box">11425</div>
+<script>
+    var box = document.getElementById('box');
+    box.x = 'box';
+
+    //设置执行函数的对象属性
+    function outFunc() {
+        this.x = 'outFunc';
+        box.addEventListener('click', func, false);
+    }
+    outFunc();
+
+    function func() {
+        console.log(this.x); //点击以后输出box 说明该this指向的是调用addEventListener的对象
+    }
+    function outFunc() {
+        this.x = 'outFunc';//给全局对象window.x赋值（相当于赋值全局变量）
+        box.addEventListener('click', func.bind(this), false);
+    }
+    function func() {
+        console.log(this.x); //输出outFunc 使用bind设置this的值绑定成了里面的window否则应该是box因为addevent里面的事件this是事件源
+    }
+</script>
+</body>
+</html>

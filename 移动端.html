@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>web开发</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            border:0;
+        }
+        a{
+            text-decoration:none;
+        }
+        li{
+            list-style: none;
+        }
+        img{
+            border:0;
+        }
+    </style>
+</head>
+<body>
+<ul class="img-container" id="container">
+    <li><img src="img/1.jpg" alt=""></li>
+</ul>
+<script src="zepto.min.js">
+    /*移动端框架有zepto.js=javascript
+     * touch事件分为：touchstart->touchmove->touchend
+     * 来电话是就是touchcancel
+     * click在移动端延迟300毫秒
+     * canvas代替image标签
+     * drawImage(image,x,y,width,height);在canvas上缩放并绘制图片 代替image显示图片
+     * 图片设置SRC就是发出请求image对象让图片an等比例缩放
+     * css3中有动画事件AnimationEnd样式9*/
+</script>
+<script>
+    var zWindow=$(window);
+    var render=function () {
+
+        var zWidth=zWindow.width();
+//        zepto和jQuery是一样的
+    }
+
+</script>
+</body>
+</html>

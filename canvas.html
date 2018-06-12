@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            box-shadow: 0 0 40px black;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="500" height="500">您的浏览器不支持canvas</canvas>
+</body>
+<script type="text/javascript">
+    var canvas = document.querySelector('canvas');
+    var ctx = canvas.getContext('2d');
+
+    var canvasW = canvas.width;
+    var canvasH = canvas.height;
+
+    //随机数函数
+    function random(min,max) {
+        return parseInt(Math.random()*(max - min) + min);
+    }
+/*所有的圆心坐标和和水平速度和竖直速度都是用来绘制圆心的位置*/
+    //构造函数
+    function Ball(x, y, r, speedX, speedY) {
+        this.r = r || random(10, 30);
+        this.x = x || random(this.r, canvasW - this.r);
+        this.y = y || random(this.r, canvasH - this.r);
+        this.speedX = speedX || random(2, 5);
+        this.speedY = speedY || random(2, 5);
+        //draw方法
+        this.draw = function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+        }
+        //move方法
+        this.move = function() {
+//            每次重新绘画小球
+            this.x += this.speedX;
+//            圆心的坐标就是利用和speedX相加的积累当两个球碰撞的时候就会把最后一个+的X变成负数再与现在的圆心相加圆心的坐标就会比之前小，就不会再碰撞，理念就是更改圆心的坐标
+            this.y += this.speedY;
+            if(this.x < this.r || this.x > canvasW - this.r) {
+                this.speedX = -this.speedX;
+            }
+//小球在屏幕外面，取反变成负数然后下一次坐标去掉这个就会得到可以显示小球的坐标
+            if(this.y < this.r || this.y > canvasH - this.r) {
+                this.speedY = -this.speedY;
+            }
+            this.draw();//调用draw方法
+        }
+    }
+/*本来是圆心坐标+speedX和speedY然后就撞上了回到上一个状态就是减去这个虽然一直减*/
+// 减但是在this.y < this.r 可视区看不见又开始变成正值这个思想巧妙我改我自己的那个
+    var ball1 = new Ball();
+    var ball2 = new Ball();
+    ball1.draw();
+    ball2.draw();
+
+    // 碰撞函数
+    function isCrash(obj1, obj2) {
+        var x = obj1.x - obj2.x;
+        var y = obj1.y - obj2.y;
+        var distance = Math.sqrt(x*x + y*y);//开方函数
+        if(distance <= obj1.r + obj2.r) {//判断碰撞
+            obj1.speedX = -obj1.speedX;
+            console.log( obj1.speedX );
+            obj1.speedY = -obj1.speedY;
+            obj2.speedX = -obj2.speedX;
+            obj2.speedY = -obj2.speedY;
+        }
+    }
+
+    var frameNum = 0;
+    var prevDate = new Date();
+
+    function gameloop() {
+        frameNum++;
+        ctx.clearRect(0, 0, canvasW, canvasH);
+        ball1.move();
+        ball2.move();
+        isCrash(ball1,ball2);
+        window.requestAnimationFrame(gameloop);//跟setTimeout相似，根据帧率执行
+    }
+    gameloop();
+</script>
+</html>
+

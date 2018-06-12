@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5之Canvas画圆形</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            border:0;
+        }
+        body{
+            width: 100%;
+            height: 800px;
+            /*background-color:black;*/
+        }
+        .moveing{
+            /*transform: translate(20px,10px);*/
+            position: absolute;
+            /*animation: move 10s linear infinite;*/
+            /*animation-direction: alternate;*/
+            transition: all 0.7s linear;
+        }
+#one{
+    width: 200px;
+    height: 200px;
+    border:1px solid black;
+}
+    </style>
+</head>
+<body>
+
+<canvas id="canvas1" width="220" height="220" class="moveing">您的浏览器不支持</canvas>
+<canvas id="canvas" width="220" height="220" class="moveing">您的浏览器不支持</canvas>
+<script>
+    var canvas1;
+var position=[{left:1002,top:200},{left:902,top:300},{left:502,top:100},{left:300,top:200},{left:400,top:30
+
+}];
+    var position1=[{left:-100,top:500},{left:502,top:30},{left:800,top:320},{left:300,top:200},{left:480,top:230
+
+    }];
+    window.requestAnimationFrame =
+        window.requestAnimationFrame ||
+        window.webkitrequestAnimationFrame  ||
+        window.mozrequestAnimationFrame  ||
+        window.msrequestAnimationFrame  ||
+        window.orequestAnimationFrame;
+    window.cancelAnimationFrame =
+        window.cancelAnimationFrame ||
+        window.webkitCancelAnimationFrame  ||
+        window.mozCancelAnimationFrame  ||
+        window.msCancelAnimationFrame  ||
+        window.oCancelAnimationFrame;
+
+
+    canvas1 = document.getElementById("canvas");
+    canvas2 = document.getElementById("canvas1");
+    canvas1.t=0;
+    canvas2.t=0;
+    canvas1.flag=1;
+    canvas2.flag=2;
+    window.onload = function () {
+var cans=[canvas1,canvas2];
+
+        var ctx = canvas1.getContext("2d");
+        var radgrad = ctx.createRadialGradient(50, 50, 10, 110, 110, 110);
+//        外圆的起始圆心和半径等于整个圆所以形成了泡泡
+        radgrad.addColorStop(0, 'rgba(255,255,255,1)');
+        radgrad.addColorStop(1,'rgba(255,255,0,.3)');
+        ctx.beginPath();
+        ctx.arc(110, 110, 110, 0, Math.PI * 2);
+        //添加透明设置
+        ctx.globalAlpha = 0.01;
+        ctx.fillStyle = radgrad;
+
+        ctx.fill();
+
+        var ctx1 = canvas2.getContext("2d");
+        var radgrad1 = ctx1.createRadialGradient(50, 50, 15, 110, 110, 110);
+//        外圆的起始圆心和半径等于整个圆所以形成了泡泡，注意我设置的外面的结束圆是整个圆的大小和整个圆的圆心左边都对应在一起，所以才会形成泡泡的样子
+        radgrad1.addColorStop(0, 'rgba(255,255,255,1)');
+        radgrad1.addColorStop(1,'rgba(255,55,0,.05)');
+        ctx1.beginPath();
+        ctx1.arc(110, 110, 110, 0, Math.PI * 2);
+        //添加透明设置
+        ctx1.globalAlpha = 0.01;
+        ctx1.fillStyle = radgrad1;
+
+        ctx1.fill();
+        ctx1.closePath();
+//        var radgrad2 = ctx.createRadialGradient(250, 50, 10, 310,110, 100);
+////        外圆的起始圆心和半径等于整个圆所以形成了泡泡
+//        radgrad2.addColorStop(0, 'rgba(255,255,255,1)');
+//        radgrad2.addColorStop(1,'rgba(0,0,55,.05)');
+//        ctx.beginPath();
+//        ctx.arc(310, 110, 100, 0, Math.PI * 2);
+//        //添加透明设置
+//        ctx.globalAlpha = 0.01;
+//        ctx.fillStyle = radgrad2;
+//
+//        ctx.fill();
+//        ctx.closePath();
+//        var radgrad3 = ctx.createRadialGradient(350, 50, 10, 410,110, 100);
+////        外圆的起始圆心和半径等于整个圆所以形成了泡泡
+//        radgrad3.addColorStop(0, 'rgba(255,255,255,1)');
+//        radgrad3.addColorStop(1,'rgba(0,55,55,.05)');
+//        ctx.beginPath();
+//        ctx.arc(410, 110, 100, 0, Math.PI * 2);
+//        //添加透明设置
+//        ctx.globalAlpha = 0.01;
+//        ctx.fillStyle = radgrad3;
+//
+//        ctx.fill();
+//        ctx.closePath();
+//        var radgrad35 = ctx.createRadialGradient(450, 50, 10, 510,110, 100);
+////        外圆的起始圆心和半径等于整个圆所以形成了泡泡
+//        radgrad35.addColorStop(0, 'rgba(255,255,255,1)');
+//        radgrad35.addColorStop(1,'rgba(255,55,55,.05)');
+//        ctx.beginPath();
+//        ctx.arc(510, 110, 100, 0, Math.PI * 2);
+//        //添加透明设置
+//        ctx.globalAlpha = 0.01;
+//        ctx.fillStyle = radgrad35;
+//
+//        ctx.fill();
+//        ctx.closePath();
+//        move1(canvas1,50);
+////        move1(canvas2,20);
+ run(canvas2,position1);
+      run(canvas1,position);
+     }
+//    window.requestAnimationFrame =
+//        window.requestAnimationFrame ||
+//        window.webkitrequestAnimationFrame  ||
+//        window.mozrequestAnimationFrame  ||
+//        window.msrequestAnimationFrame  ||
+//        window.orequestAnimationFrame;
+//    window.cancelAnimationFrame =
+//        window.cancelAnimationFrame ||
+//        window.webkitCancelAnimationFrame  ||
+//        window.mozCancelAnimationFrame  ||
+//        window.msCancelAnimationFrame  ||
+//        window.oCancelAnimationFrame;
+
+
+
+    function run(can,pos){
+
+           can.timer=setInterval(function () {
+               can.radm=parseInt(Math.random()*5);
+               var tan=can.y/can.x;
+               can.x=(pos[can.radm].left);
+              can.x2=(can.x*can.x);
+              can.y=(pos[can.radm].top);
+              can.y2=(can.y*can.y);
+
+               can.xy=Math.sqrt(can.x2+can.y2);
+if(collase()){
+//    can.style.left=(25)+"px";
+//    can.style.top=(25)+"px";
+//    clearInterval(can.timer);
+//    canvas2.style.left=(canvas2.x*110/canvas2.xy)+"px";
+//    canvas2.style.top=(canvas2.y*110/canvas2.xy)+"px";
+}
+//
+//                   canvas2.style.left=-(canvas2.x*110/canvas2.xy)+"px";
+//                   canvas2.style.top=-(canvas2.y*110/canvas2.xy)+"px";
+
+//
+//               if((can.x2+can.y2)<(220*220)){
+//                   collase(can);
+////          console.log(x);
+////          console.log(y);
+//                   canvas1.xy=Math.sqrt(can.x2+can.y2);
+////console.log("xy是"+xy);
+//                   can.style.left=(can.x*220/canvas1.xy)+"px";
+//                   can.style.top=(can.y*220/canvas1.xy)+"px";
+////          当相撞的时候以原来的角度变成了相切这样就不会相撞还保证了原来的方向
+////      console.log("+200");
+////      console.log(x2+y2);
+//                   console.log("相撞了");
+//                   clearInterval(can.timer);
+//
+//               }
+               else
+               {
+                   can.style.left = (pos[can.radm].left) + "px";
+                   can.style.top = (pos[can.radm].top) + "px";
+               }
+
+           },1000);
+
+
+    }
+var w=0;
+    function collase(){
+w++;
+    var x=canvas1.x-canvas2.x;
+    var y=canvas1.y-canvas2.y;
+    var x2=x*x;
+       var y2=y*y;
+//       var xy=求得的值开根号就算相差多少二者都向左和移动
+      if((x2+y2)<(220*220)){
+          console.log("相撞了"+w);
+
+          canvas1.style.left=(canvas1.x-50)+"px";
+         canvas1.style.top=(canvas1.y-50)+"px";
+          canvas2.style.left=(canvas2.x+50)+"px";
+          canvas2.style.top=(canvas2.y+50)+"px";
+          return true; }
+
+    }
+    function run2(can){
+
+            var radm=parseInt(Math.random()*5);
+            var tan=y/x;
+            var x=(position[radm].left);
+            var x2=(x*x);
+            var y=(position[radm].top);
+            var y2=(y*y);
+
+            if((x2+y2)<(220*220)){
+//          console.log(x);
+//          console.log(y);
+                var xy=Math.sqrt(x2+y2);
+//console.log("xy是"+xy);
+                can.style.left=(x*220/xy-5)+"px";
+                can.style.top=(y*220/xy)+"px";
+//          当相撞的时候以原来的角度变成了相切这样就不会相撞还保证了原来的方向
+//      console.log("+200");
+//      console.log(x2+y2);
+                console.log("相撞了");
+//                clearInterval(can.timer);
+//                can.style.left=-(x*220/xy)+"px";
+//                can.style.top=-(y*220/xy)+"px";
+            }
+            if((x2+y2)>(220*220))
+            { console.log(radm);
+                can.style.left=(position[radm].left)+"px";
+                can.style.top=(position[radm].top)+"px";
+            }
+
+/*for(var i=0;i<1000000000;i++){
+    console.log("click")
+//          此段代码控制时间
+}*/
+
+setTimeout(function () {
+    can.timer=window.requestAnimationFrame(function(){console.log(123456);run(canvas1)});
+},500);
+
+
+    }
+    function move1(can,num) {
+       can.onmousedown=function () {
+          document.onmousemove=function(e){
+              console.log("click")
+              can.style.left=(e.clientX-num)+"px";
+              can.style.top=(e.clientY-num)+"px";
+          }
+//          回调函数无论是在某个普通函数中也要先调用普通函数才可以使用里面的回调函数
+       }
+    }
+//var canHeight=document.body.scrollHeight||document.documentElement.scrollHeight;
+//    console.log("shi"+canHeight);
+    function move(canvas1,num,v){
+        setInterval(function () {
+            canvas1.t++;
+//       if(num>100)
+//       {
+//           num=(num/10)+20;
+//       }
+//       var x=(Math.random()+num/10)*num;
+         var x=10*canvas1.t;
+         canvas1.downSpeed+=10*canvas1.t;
+       console.log(x);
+//       console.log(canvas1);
+//       var y=(Math.random()+num/10)*num+num;
+       var y=0.5*10*(canvas1.t*canvas1.t);
+//       if(y>=canHeight&&canvas1.downSpeed>0)
+//       {
+//
+//           up(canvas1);
+//
+//       }
+
+//     写成document.getElementById("canvas")就好使了，因为canvas有歧义
+       console.log("translate("+(x+"px")+","+(y+"px")+");");
+       canvas1.style.transform="translate("+(x+"px")+","+(y+"px")+");";
+
+
+   },1000);
+    }
+   /* function up(can) {
+        var s=can.downSpeed*can.t-(0.5*10*(can.t*can.t));
+        can.style.transform="translate("+(0+"px")+","+((-s)+"px")+")";
+    }*/
+//    var canvas=document.getElementById("canvas");
+//    var context=canvas.getContext("2d");
+//    context.fillStyle="#0000ff";
+//    context.beginPath();
+//    context.arc(600,300,200,0,Math.PI*2,true);
+//    context.closePath();
+//    var grad=context.createRadialGradient(70,70,20,70,70,20);
+//    /* 设定各个位置的颜色 */
+//    grad.addColorStop(0,'red');
+//    grad.addColorStop(0.5,'yellow');
+//    grad.addColorStop(1,'green');
+//    context.globalAlpha = .5;
+//    context.fillStyle = grad;
+//    context.fill();
+    /*  context.arc(600,300,200,0,Math.PI*2,true);
+
+     第一个参数x：起点横坐标
+
+     第二个参数y：起点纵坐标
+
+     第三个参数radius：圆的半径
+
+     第四个参数startAngle：开始角度
+
+     第五个参数endAngle：结束角度
+
+     第六个参数anticlockwise：是否按照顺时针方向进行绘制*/
+</script>
+</body>

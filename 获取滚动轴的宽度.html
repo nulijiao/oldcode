@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算滚动条的宽度</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            border:0;
+
+        }DIV{
+                     height: 590px;
+                 }
+
+    </style>
+</head>
+<body>
+<div id="DIV"><br><br></div>
+<script>
+    /*!
+     * 获取浏览器竖向滚动条宽度
+     * 首先创建一个用户不可见、无滚动条的DIV，获取DIV宽度后，
+     * 再将DIV的Y轴滚动条设置为永远可见，再获取此时的DIV宽度
+     * 删除DIV后返回前后宽度的差值
+     *
+     * @return    Integer     竖向滚动条宽度
+     */
+    function getScrollWidth() {
+        var noScroll, scroll, oDiv = document.createElement("DIV");
+        oDiv.style.cssText = "position:absolute; top:-1000px; width:100px; height:100px; overflow:hidden;";
+        noScroll = document.body.appendChild(oDiv).clientWidth;
+        oDiv.style.overflowY = "scroll";
+        scroll = oDiv.clientWidth;
+        document.body.removeChild(oDiv);
+        return noScroll-scroll;
+    }
+    document.documentElement.style.overflow="hidden";
+    var clien1=document.documentElement.clientWidth
+    document.documentElement.style.overflow="scroll";
+   var clien2=document.documentElement.clientWidth;
+ alert("滚动轴的宽度是"+(clien1-clien2));
+    /*
+     注意：IE、Firefox3+、Opera9.5、Chrome、Safari支持，在IE中，默认坐标从(2,2)开始计算，导致最终距离比其他浏览器多出两个像素，我们需要做个兼容。
+    * 先在无滚动轴的时候获取clientwidth然后再有滚动轴的时候获取clientwidth,有滚动滚动轴的时候clientwidth是原来减去滚动轴，二者相减就是滚动轴的宽度*/
+</script>
+</body>
+</html>

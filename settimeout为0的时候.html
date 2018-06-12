@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<input type="text" id="id1">-->
+<!--<div id="show1"></div>-->
+
+<input type="text" id="in" >
+<div id="b">input is:</div>
+<div id="a">input is:</div>
+
+
+<script>
+document.getElementById("in").onkeydown=function () {
+    console.log("key");
+    document.getElementById('b').innerHTML= 'input is：'+this.value;
+    setTimeout(function(){document.getElementById('a').innerHTML= 'input is：'+document.getElementById("in").value;},0);
+}
+/*
+为什么输入123，输出的结果是12呢？
+
+因为输入3时所触发的事件级联中，keydown事件的顺序先于(给input对象value属性赋值的默认事件)，所以输出结果慢了一拍。因为输出结果是value所以先执行keydown但是此时还没有给value更新赋值，所以要先延迟keydown这样就先更新value，所以动作就应该是完成动作触发的事件会在先于默认赋值行为，所以有时候需要延迟就延迟用settimeout0相当于延迟
+
+针对此问题，解决方案为把onkeydown属性值改为onkeydown="setTimeout(function(){document.getElementById('a').innerHTML= 'input is：'+this.value;},0)"即延迟keydown事件执行。
+
+作者：小睿7777777
+链接：http://www.jianshu.com/p/d116cdb271e7
+    來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。*/
+//   document.getElementById("id1").onkeypress = function(){
+//    document.getElementById('show1').innerHTML = this.value;
+//   }
+//    document.getElementById("id1").onkeypress = function(){
+//        setTimeout(function(){
+//            document.getElementById('show1').innerHTML = this.value;
+//        },0 );
+//    }
+//    var a1=document.getElementById("one");
+//    var b1=document.getElementById("to");
+// function a() {
+//        alert("a");
+//    }
+//    function show(val) {
+//        document.getElementsByTagName('div')[0].innerHTML = val;
+//    }
+//  function b() {
+//        alert("b");
+//    }
+//
+//    setTimeout(function () {
+//        a();
+//     },-520);
+// b();
+// 即使是0也会延迟即使是负数也会延迟
+    /*JavaScript 是单线程执行的，也就是无法同时执行多段代码，
+    当某一段代码正在执行的时候，所有后续的任务都必须等待，
+    形成一个队列，一旦当前任务执行完毕，再从队列中取出下一个任务。这也常被称为 “阻塞式执行”。所以一次鼠标点击，或是计时器到达时间点，或是 Ajax 请求完成触发了回调函数，这些事件处理程序或回调函数都不会立即运行，而是立即排队，一旦线程有空闲就执行。假如当前 JavaScript 进程正在执行一段很耗时的代码，此时发生了一次鼠标点击，那么事件处理程序就被阻塞，用户也无法立即看到反馈，事件处理程序会被放入任务队列，直到前面的代码结束以后才会开始执行。如果代码中设定了一个 setTimeout，那么浏览器便会在合适的时间，将代码插入任务队列，如果这个时间设为 0，就代表立即插入队列，但不是立即执行，仍然要等待前面代码执行完毕。所以setTimeout 并不能保证执行的时间，
+    是否及时执行取决于 JavaScript 线程是拥挤还是空闲。
+     如果代码中设定了一个 setTimeout，那么浏览器便会在合适的时间，将代码插入任务队列，如果这个时间设为 0，就代表立即插入队列，但不是立即执行，仍然要等待前面代码执行完毕。所以setTimeout 并不能保证执行的时间，
+     是否及时执行取决于 JavaScript 线程*/
+</script>
+</body>
+</html>

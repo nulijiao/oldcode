@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+     在ajax技术没有出现以前就是同步操作请求-》服务端处理-》回返按照这样的顺序但是ajax出现以后实现了我们的异步技术JavaScript+XML利用XMLhttpRequest对象来进行异步
+     http无状态协议客户端向服务端发送请求就需要用http协议
+    *在IE5以下没有XMLhttprequest，所以要进行JavaScript能力检测
+    *get信息可见不安全利用URL传送在2000字节左右传送到服务器上，post请求向服务器发送请求
+    * http相应1状态码（2开头都是成功状态）2响应头(包含日期长度等)3响应体（响应正文）*/
+    /*XMLhttprequest发送请求*/
+//    创建ajax对象可以实现异步局部更新网页
+    var XHR;
+if(window.XMLHttpRequest){
+    XHR=new XMLHttpRequest();
+//    标准浏览器
+}else{
+    XHR=new ActiveXObject("Microsoft.XMLHttp")
+//    IE5、IE6以下
+}
+//2向服务器发送请求
+    XHR.open("GET","a.php?q=5",true);
+//    XHR.open("POST","a.php",true);
+//    XHR.setRequestHeader()
+//方式有POST和GET  true表示异步获取数据
+//    send才会起作用
+    XHR.send();
+//    3接受服务器的数据
+    XHR.onreadystatechange=function () {
+        //    readystate状态发生改变都会调用这个函数readyState有以下几个状态0,请求初始化1,服务器建立已连接2,请求已经接受3,请求处理中4请求已经完成，ajax发送向后台的请求时候，返回给ajax的建立与服务器连接的状态相应已就绪每次 readystate每次都会发生变化就会调用on readystatechange事件
+  if(  XHR.readyState===4&&XHR.status===200){
+      alert(XHR.responseText);
+      //    XHR.responseText服务器响应的时候
+//      XHR.status的状态就是后台发送请求后接收到的状态码
+  }
+    }
+
+/*状态码;200服务器返回成功
+* 301永久重定向
+* 302临时重定向
+* 404资源找不到
+* 500服务器错误*/
+
+</script>
+</body>
+</html>

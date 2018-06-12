@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            border:0;
+        }
+        .wrapper{
+            width: 100px;
+            height: 200px;
+            position: absolute;
+            top:0;
+            overflow: hidden;
+        }
+        .right{
+            right:0;
+        }
+        .left{
+            left:0;
+        }
+        .circleProgress{
+            width: 160px;
+            height: 160px;
+            border:20px solid transparent;
+            border-radius: 50%;
+            position: absolute;
+            top:0;
+        }
+        .rightcircle{
+            border-top:20px solid green;
+            border-right:20px solid green;
+            right:0;
+        }
+        .circleProgress{
+            width: 160px;
+            height: 160px;
+            border:20px solid transparent;
+            border-radius: 50%;
+            position: absolute;
+            top:0;
+            -webkit-transform: rotate(45deg);
+        }
+        .leftcircle{
+            border-bottom:20px solid green;
+            border-left:20px solid green;
+            left:0;
+        }
+    </style>
+</head>
+<body>
+<div class="circleProgress_wrapper">
+    <div class="wrapper right">
+        <div class="circleProgress rightcircle"></div>
+    </div>
+    <div class="wrapper left">
+        <div class="circleProgress leftcircle"></div>
+    </div>
+</div>
+</body>
+</html>

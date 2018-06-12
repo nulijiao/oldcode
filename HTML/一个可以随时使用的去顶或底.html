@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回到顶部和回到底部</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            border:0;
+
+        }
+        #top{
+            width: 10%;
+            height: 30px;
+            position: fixed;
+            /*background-color: blue;*/
+            bottom:100px;
+            left:80%;
+            /*border-radius:50% 50% 0 0;*/
+            /*text-align: center;*/
+
+            /*box-shadow: 1px 2px 6px #000;*/
+             display: none;
+            z-index: 99999999;
+        }
+        #botm img{
+            width: 100%;
+        }
+        #botm{
+            width: 10%;
+            height: 30px;
+            position: fixed;
+            /*background-color: blue;*/
+            bottom:200px;
+            left:80%;
+            /*border-radius:0 0 50% 50% ;*/
+            text-align: center;
+            /*line-height:  50px;*/
+            /*box-shadow: 1px 2px 6px #000;*/
+
+            z-index: 99999999999999999999;
+        }
+        #top  img{
+            width: 100%;
+        }
+        .l{
+            background-color: red;
+            height: 600px;
+            margin-top: 200px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>
+    这个就是关于在某个位置调换回到顶部和回到底部的切换临界点
+可以自己设定然后观察鼠标滚动时候是否切换了回到顶部和回到底部
+</h1>
+
+<div class="l"></div>
+<div class="l"></div>
+<div class="l"></div>
+<div class="l"></div>
+<div class="l"></div>
+<div id="top">
+    <img src="../resource/img/321.png" alt=""></div>
+<div id="botm"><img src="../img/123.png" alt=""></div>
+<script src="../jQuery/jquery-3.2.1.min.js"></script>
+<script>
+
+    $(function () {
+
+        BT();
+//        POS代表在哪个位置变成回到底部那个位置变成回到顶部是一个临界点
+        function  BT(POS){
+
+
+        var target;
+        if (document.documentElement.scrollTop) {//$("html).scrollTop()
+            target = $("html");
+        } else {
+            target = $("body");
+        }
+        console.log("我是start");
+            var l;
+        if(POS==undefined)
+//        没有传POS就默认是文档长度的一半
+            {
+                 l=($(document).height()/2)-200;
+                console.log("我是最先开始的"+l);}
+        else{
+            l=POS;
+        }
+
+        function which() {
+            var clientHeight = $(window).height();
+
+            var scrollTop = $(document).scrollTop();
+            console.log("document的高度是" + scrollTop);
+            var maxScroll = $(document).height() - clientHeight;
+
+
+
+            //滚动距离超过可视一屏的距离时显示返回顶部按钮
+            if (scrollTop>=l ) {
+                $('#top').show();
+            }
+            else {
+                $('#top').hide();
+            }
+            //滚动距离到达最底部时隐藏返回底部按钮
+            if (scrollTop<l) {
+                $('#botm').show();
+            }
+            else {
+                $('#botm').hide();
+            }
+        }
+        window.onscroll = function () {
+            //滚动时调整按钮显隐
+            which();
+
+        };
+
+        $("#top").on("click", function () {
+            console.log(target);
+            $('html,body').animate({scrollTop: 0},300);
+            console.log("2");
+        });
+        $("#botm").on("click",function () {
+            console.log(target);
+            $('html,body').animate({scrollTop:($(document).height())},400);
+//$(document).height()方法返回整形    $('html,body')以后滚动条就执行了可是target也是兼容性测试啊为什么会不好使
+            console.log("1");
+        });
+
+        }});
+
+
+</script>
+</body>
+</html>

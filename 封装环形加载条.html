@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #circle {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            border-radius: 50%;
+            border:1px solid red;
+            /*background:yellow;*/
+        }
+
+        .clip_left,.clip_right{
+            width:200px;
+            height:200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .circle_left, .circle_right{
+            width:200px;
+            height:200px;
+            position: absolute;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            /*background: green;*/
+transform: rotate(0deg);
+            /*transition: all  2s linear;*/
+        }
+        /*出于展示用的改变背景色*/
+        /*.circle_left{
+            background: green;
+        }
+        .circle_right{
+            background: lightblue;
+        }*/
+        .circle_right,.clip_right {
+            clip:rect(0,auto,auto,100px);
+
+        }
+        .circle_left , .clip_left{
+
+            clip:rect(0,100px,auto,0);
+        }
+
+
+
+
+        .circle_right{
+            /*animation: right 2s linear;*/
+
+            /*background-color:red;*/
+            /*transform: rotate(320deg);*/
+        }
+        /*
+        *当top和left取值为auto时，相当于0
+        *当bottom和right取值为auto时，相当于100%
+        */
+        .circle_left{
+            /*animation:left 2s linear ;*/
+            /*transform: rotate(650deg);*/
+            /*background-color:red;*/
+        }
+        /*想要二者有重叠的部分就是左侧多旋转180+右侧旋转的角度*/
+        .mask {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            left: 25px;
+            top: 25px;
+            background: #FFF;
+            position: absolute;
+            text-align: center;
+            line-height: 150px;
+            font-size: 16px;
+            border:1px solid red;
+            z-index: 99999999;
+        }
+        .circle{
+            /*animation: change 2s linear;*/
+            /*background-color: red;*/
+        }
+        @keyframes change {
+            from{
+                background-color: red;
+            }
+            to{
+                background-color: red;
+            }
+        }
+        @keyframes left {
+            0%{
+
+                transform: rotate(0deg);
+                background-color:red;}
+            50%{
+                transform: rotate(300deg);
+                background-color:red; }
+            100%{
+                transform: rotate(650deg);
+                background-color:red; }
+        }
+        @keyframes right {
+            10%{
+                transform: rotate(0deg);
+            }
+            30%{
+                transform: rotate(60deg);
+            }
+            60%{
+                transform: rotate(180deg);
+            }
+            70%{
+                transform: rotate(250deg);
+            }
+            80%{
+                transform: rotate(260deg);
+            }
+            100%{
+                transform: rotate(300deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<!--背景圆-->
+<div id="circle">
+
+</div>
+<script src="jQuery/jquery-3.2.1.min.js"></script>
+<script>
+    var circle=(function ($) {
+        var options={
+            CircleColor:"yellow",
+            CircleSize:200,
+            numRate:85,
+            animate_DURING:"one",
+            rotateColor:"red",
+             parentName:"#circle"
+        }
+        function Cir(option)
+        {
+            this.opt={}
+               $.extend(this.opt,options,option);
+               this.init();
+              }
+            Cir.prototype.init=function () {
+                var that = this;
+                $(that.opt.parentName).append($("<div class='circle_left'></div>"));
+                $("<div class='circle_left'></div>").append($('<div class="clip_left"></div>'));
+
+                $(that.opt.parentName)[0].style.backgroundColor = this.opt.CircleColor;
+
+                $(that.opt.parentName).append($("<div class='circle_right'></div>"));
+                $("<div class='circle_right'></div>").append($('<div class="clip_right"></div>'));
+                $(that.opt.parentName).append($("<div class='mask'></div>"));
+                $(".circle_left")[0].style.backgroundColor = this.opt.rotateColor;
+                $(".circle_right")[0].style.backgroundColor = this.opt.rotateColor;
+                $(".circle_left")[0].style.transition = "all 2s  linear";
+                $(".circle_right")[0].style.transition = "all 2s  linear";
+                console.log(this.opt.numRate);
+                $(".mask").text(this.opt.numRate + "%");
+                if (this.opt.numRate <= 50) {
+
+                    var degree = (this.opt.numRate / 100) * 360;
+//            这个是右面的半圆旋转，因为左面的只要旋转180就可以
+                    console.log(degree);
+                    $(".circle_left")[0].style.transform = "rotate(" + 180 + "deg)";
+                    $(".circle_right")[0].style.backgroundColor = this.opt.CircleColor;
+                    $(".circle_right").animate({}, function () {
+                        $(".circle_right").css({'transform': "rotate(" + degree + "deg)"});
+                    });
+                }
+                else{
+                    ////            加载效果什么样比较好？还是一点一点产生
+                    $(".circle_left")[0].style.zIndex ="99";
+                    $(".circle_left")[0].style.opacity ="0";
+//                 $(".circle_right")[0].style.backgroundColor = this.opt.CircleColor;
+                    $(".circle_right")[0].style.opacity ="0";
+                    var degree=(this.opt.numRate/100)*360;
+                    console.log(degree);
+                    //           这个是右面的半圆旋转，因为左面的只要旋转180就可以
+//                 $(".circle_left")[0].style.transform="rotate("+180+"deg)";
+                    $(".circle_left")[0].style.zIndex=99;
+                    $(".circle_left")[0].style.backgroundColor = that.opt.rotateColor;
+
+
+
+
+
+
+                        $(".circle_left").animate({},function () {
+                        $(".circle_left")[0].style.backgroundColor = that.opt.rotateColor;
+                        $(".circle_left")[0].style.opacity ="1";
+                        $(".circle_left").css({'transform':"rotate("+(180)+"deg)"})
+                    });
+
+
+
+
+                    setTimeout(function () {
+                        $(".circle_right").animate({}, function () {
+
+                            console.log(1);
+                            $(".circle_right").css({'transform': "rotate(" + (degree - 180) + "deg)"});
+                        }, 1000);
+
+                        setTimeout(function () {
+                            console.log(2);
+                            $(".circle_right")[0].style.opacity = "1";
+                            $(".circle_right")[0].style.backgroundColor = that.opt.rotateColor;
+                        }, 300);
+
+
+                        //            $(".circle_right")[0].style.transform="rotate("+(degree-180)+"deg)";
+                        /*另一个超过50%的表现形式*/
+                        /* if(this.opt.numRate>50) {
+                    $(".circle_right")[0].style.backgroundColor = this.opt.rotateColor;
+                    $(".circle_left")[0].style.backgroundColor = this.opt.rotateColor;
+                    var degree1=(100-that.opt.numRate)*360/100*-1;
+                    console.log(degree1);
+                    $(".circle_left").animate({},function () {
+
+
+                        $(".circle_left").css({'transform':"rotate("+(degree1)+"deg)"});
+                    });
+                }
+
+
+        }*/
+                 }
+                },
+function
+init(opt) {
+    new  Cir(opt);
+}
+return {
+            init:init
+}
+
+    })(jQuery,"#circle");
+    var opt={
+        CircleColor: "white",
+        CircleSize:200,
+        numRate:85,
+        animate_DURING:"one",
+        rotateColor:"red"
+
+    }
+    circle.init(opt);
+</script>
+</body>
+</html><!--
+             /*  首先，Jquery并不支持在animate的样式中的transform效果，这里通过使用animate的回调函数来实现。
+
+<div id="div" style="width: 200px;height: 200px;border: 1px solid red; transition: all 2s"></div>
+
+
+$("#div").animate({},function(){                                       //第一个花括号里面是动画内容，可以为空，但不能省去中括号
+
+$("#div").css({'width':'300px','height':'300px','transform':'rotate(180deg)'});                                   //在回调函数里面改变css属性来实现transform中的动画变换
+
+});
+/*
+/!*            p*!/s:在同时使用多个transform属性时，用空格符隔开多个属性值，如：
+
+transform:rotate(180deg) translate(200px);
+
+注意：使用rotate旋转时，坐标轴也同时旋转相应的角度，所以假如需要同时使用rotae与其他变换时，一定要注意他们的先后顺序。*!/*/
+--><!--//
+/*//        else{
+////            加载效果什么样比较好？还是一点一点产生
+//            $(".circle_left")[0].style.zIndex ="99";
+////           $(".circle_left")[0].style.opacity ="0";
+//  $(".circle_right")[0].style.backgroundColor = this.opt.CircleColor;
+////            $(".circle_right")[0].style.opacity ="0";
+//            var degree=(this.opt.numRate/100)*360;
+//            console.log(degree);
+////            这个是右面的半圆旋转，因为左面的只要旋转180就可以
+////            $(".circle_left")[0].style.transform="rotate("+180+"deg)";
+//          /!*  $(".circle_right").animate({"transform":"rotate("+(degree-180)+"deg)"
+//
+//
+//
+//           },100);*!/
+////            $(".circle_left")[0].style.zIndex=99;
+//
+//
+//            $(".circle_left")[0].style.backgroundColor = that.opt.rotateColor;
+//            $(".circle_left").animate({},function () {
+////                $(".circle_left")[0].style.backgroundColor = that.opt.rotateColor;
+////                $(".circle_left")[0].style.opacity ="1";
+//                $(".circle_left").css({'transform':"rotate("+(180)+"deg)"});
+//
+////                $(".circle_right").css({'transform':"rotate("+(degree-180)+"deg)"});
+//            });
+//            $(".circle_left")[0].style.transform="rotate("+0+"deg)";
+//  setTimeout(function () {
+//                $(".circle_right").animate({},function () {
+//
+//                    console.log(1);
+//                    $(".circle_right").css({'transform':"rotate("+(degree-180)+"deg)"});
+//                });
+//
+//            },3000);
+//            setTimeout(function () {
+//                console.log(2);
+////                $(".circle_right")[0].style.opacity ="1";
+//                $(".circle_right")[0].style.backgroundColor = that.opt.rotateColor;
+//            },300);
+//
+}-->

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*body{*/
+            /*width: 2000px;*/
+            /*padding:50px;*/
+            /*border:100px solid green;*/
+            /*height: 5000px;*/
+            /*margin:50px;*/
+        /*}*/
+       html{
+            width: 900px;
+           /*然后body是所知道的884因为自身的padding是16,900-16=884*/
+        }
+     div{
+         width: 500px;
+         height: 500px;
+         border:1px solid green;
+     }
+    </style>
+</head>
+<body>
+<div id="div"></div>
+<script src="jQuery/jquery-3.2.1.min.js"></script>
+<script>
+//    window的location和document的location是一样的window包含document对象
+//windows和document的区别
+//1.Window对象表示浏览器中打开的窗口；
+//2.Window对象可以省略！ 例子：alert() = window.alert()
+//3.document对象是Window对象的一部分
+//4.浏览器的HTML文档成为docuement对象
+//假如无padding无滚动
+//clientWidth=style.width
+//假如有padding无滚动
+//clientWidth=style.width+style.padding*2
+//假如有padding有滚动，且滚动是显示的
+//clientWidth=style.width+style.padding*2-滚动轴宽度
+/*offsetWidth和offsetHeight
+这一对属性指的是元素的border+padding+content的宽度和高度
+该属性和其内部的内容是否超出元素大小无关，只和本来设置的border以及width和height有关*/
+//window.location和document.location区别，两个对象的location属性都引用了Location对象 window.location === document.location //true
+   /*1.window.innerHeight和windwo.outerHeight
+    window.innerHeight;//挡住的HTML部分就不算
+    windwo.outerHeight;//指的是浏览器窗口的高度 ,包括了工具栏,地址栏等等高度
+    所以
+    outerHeight =innerHeight + 地址栏高度 +工具栏高度 +....
+浏览器的可视区也是大小改变的
+    window.innerWidth;//浏览器的内部宽度
+    window.outerWidth;//浏览器的外部宽度
+
+    window.screenTop;//浏览器窗口距离屏幕顶部的高度
+    window.screenLeft;//浏览器窗口距离屏幕左侧的宽度
+
+    注意:innerHeight和outerHeight是有兼容性的,IE9以下不支持
+
+
+    window.screen;//包含了屏幕的信息
+
+    window.screen.height;//屏幕的高度
+    window.screen.width;//屏幕的宽度
+    window.screen.availHeight;//屏幕可利用的高度就是屏幕的高度,比如windows系统的任务栏高度去除以后就是了
+    window.screen.availWidth;//屏幕可利用的宽度就是屏幕的宽度*/
+//    alert(window.screen);
+//alert(document.location);
+/*document.body.clientWidth || document.documentElement.clientWidth;document.documentElement代表HTML
+ document.body.clientHeight || document.documentElement.clientHeight;*/
+//documentElement（HTML）和body（body）
+alert("client真不变我不知道测试一下"+document.documentElement.clientWidth);
+//里面的body是bodydocumentElement是HTML
+/*可以发现chrome对document.documentElement.scrollHeight&document.documentElement.scrollTop是不能识别的，而firefox和IE11不能识别document.body.scrollHeight&document.body.scrollTop,所以要考虑的网页的兼容性，建议两种获取方法都要写在代码里。
+
+。*/
+alert(document.body.offsetWidth);
+//offsetwidth=width+padding+border+margin
+//offsetheight=height+padding+border+margin
+alert("body是"+document.body.clientWidth);
+//果然是不变的永远是可视区大小
+alert(document.documentElement.clientWidth);
+//不设置body的大小而二者都是浏览器可视区的宽度为了兼容IE以下可以获取我们的浏览器可视区宽度就是document.body.clientWidth
+//clientwidth和height都是padding+内容
+//console.log(window.innerHeight);
+//console.log(window.outerHeight)
+    /*
+    * clientwidth和clientheight是所有浏览器解析方式相同
+    * offsetTOP和offsetleft兼容问题
+    * offsetwidth和offsetheight可以认为浏览器解析几乎是一致的
+    *offsetheight
+    * scrollheight和scrollwidth
+    ** scrollheight在火狐里面把body当成是一个div标签处理处理
+    *内容>body是内容的高度
+    * body大则取body就是的margin+padding+border
+    * 在火狐中就是直接取得document.body 中不同于上面
+    * 在某个div中的scrollwith和scrollheight
+    * 无滚动轴
+    * scrollwidth==clientwidth=style.width+stye.padding*2
+    * 有滚动轴
+    * scrollwidth==实际内容的宽度+padding*2；
+    * scrollheight==实际内容的高度+padding*2
+    * 注意实际内容的高度不是设定的height而是有许多被超出的内容，比如儿子元素比自己高就是儿子元素的高度叠加。但是不包括脱离文档流的内容
+    * event对象的坐标
+    * event.clientX/Y相对于浏览器可视区的左上角
+    *
+    * event.screenX/Y相对于屏幕的左上角
+    * EVENT.offsetX/Y相对于事件源的左上角
+    * event.pageX/Y是相对于文档整个网页的左上角如果网页被滚动条滚上去了就是滚上去那部分的左上角开始算起
+    * X/y是IE属性所以就是相对于CSS的已经定位的最内层元素
+    *
+    * */
+   document.getElementById("div").onclick=function (e) {
+       console.log("client"+e.clientX);
+   }
+
+   /*screenX=screenleft
+   * 在火狐谷歌中的clientX都是一样的在IE中元素设置position就会和offsetX是一样的否则和clientX在火狐谷歌中是相同的
+   *
+   * */
+</script>
+</body>
+</html>

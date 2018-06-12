@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .circle {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            border-radius: 50%;
+            background:yellow;
+        }
+
+        .clip_left,.clip_right{
+            width:200px;
+            height:200px;
+            position: absolute;
+            top: 0;left: 0;
+        }
+        .circle_left, .circle_right{
+            width:200px;
+            height:200px;
+            position: absolute;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            background: green;
+
+            transition: all  2s linear;}
+        /*出于展示用的改变背景色*/
+        /*.circle_left{
+            background: green;
+        }
+        .circle_right{
+            background: lightblue;
+        }*/
+        .circle_right,.clip_right {
+            clip:rect(0,auto,auto,100px);
+
+        }
+        .circle_left , .clip_left{
+
+            clip:rect(0,100px,auto,0);
+        }
+
+
+
+
+        .circle_right{
+            animation: right 2s linear;
+
+            background-color:red;
+            transform: rotate(320deg);
+        }
+        /*
+        *当top和left取值为auto时，相当于0
+        *当bottom和right取值为auto时，相当于100%
+        */
+        .circle_left{
+                       animation:left 2s linear ;
+                       transform: rotate(650deg);
+                       background-color:red;
+                   }
+        /*想要二者有重叠的部分就是左侧多旋转180+右侧旋转的角度*/
+        .mask {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            left: 25px;
+            top: 25px;
+            background: #FFF;
+            position: absolute;
+            text-align: center;
+            line-height: 150px;
+            font-size: 16px;
+        }
+        .circle{
+            /*animation: change 2s linear;*/
+            /*background-color: red;*/
+        }
+        @keyframes change {
+            from{
+                background-color: red;
+            }
+            to{
+                background-color: red;
+            }
+        }
+        @keyframes left {
+            0%{
+
+                transform: rotate(0deg);
+                background-color:red;}
+           50%{
+                transform: rotate(300deg);
+               background-color:red; }
+            100%{
+                transform: rotate(650deg);
+                background-color:red; }
+        }
+        @keyframes right {
+            10%{
+                transform: rotate(0deg);
+            }
+            30%{
+                transform: rotate(60deg);
+            }
+            60%{
+                transform: rotate(180deg);
+            }
+            70%{
+                transform: rotate(250deg);
+            }
+            80%{
+                transform: rotate(260deg);
+            }
+           100%{
+                transform: rotate(300deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<!--背景圆-->
+<div class="circle">
+    <!--左半边圆-->
+    <div class="circle_left">
+        <div class="clip_left">
+
+        </div>
+    </div>
+    <!--右半边圆-->
+    <div class="circle_right">
+        <div class="clip_right"></div>
+    </div>
+    <div class="mask">
+        <span>85</span>%
+    </div>
+</div>
+</body>
+</html>

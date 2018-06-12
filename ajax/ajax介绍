@@ -1,0 +1,1 @@
+在ajax技术没有出现以前就是同步操作请求-》服务端处理-》回返按照这样的顺序但是ajax出现以后实现了我们的异步技术JavaScript+XML利用XMLhttpRequest对象

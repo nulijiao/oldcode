@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>可视区加载（懒加载）</title>
+    <link rel="stylesheet" href="css/animate.css">
+    <style>
+        *{
+            MARGIN:0;
+            PADDING:0;
+            BORDER:0;
+        }
+        .show{
+            animation: fadeInLeft 5s linear;
+        }
+        #div{
+            position: absolute;
+            top:20000px;
+            left:500px;
+            width: 500px;
+            height: 500px;
+            background-color: red;
+        }
+        .l{
+            height: 580px;
+            /*position: absolute;*/
+        }
+        .o{
+            height: 500px;
+        }
+        #test{
+            height:400px;
+            overflow-y: scroll;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div id="test">fceg<br>gvney<br>kty <br>fceg<br>gvney<br>kty <br>fceg<br>gvney<br>kty <br>fceg<br>gvney<br>kty <br>fceg<br>gvney<br>kty <br>fceg<br>gvney<br>kty <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
+<div id="div"><div class="l"></div><div class="o"></div></div>
+<script src="jQuery/jquery-3.2.1.min.js"></script>
+<script>
+    $("#test").height(200).scrollTop(50);
+//设置值加入到DOM的内联属性里面
+    console.log(document.documentElement.clientWidth);
+    var test = document.getElementById("test");
+    var div = document.getElementById("div");
+    function show() {
+//复用此代码段可以使得实现一些懒加载
+        var clients = document.body.clientHeight || document.documentElement
+                .clientHeight || window.innerHeight;
+        //getBoundingclientrect到浏览器的top和left，相对于浏览器的标题栏啥的
+        var divTop = div.getBoundingClientRect().top;
+        if (divTop <= clients) {
+//        表示进入了可视区
+//            图片的懒加载就可以写在这个里面在这里给图片添加SRC属性并为其赋值实现图片的加载
+            div.classList.add("show");
+//        在类名表里面添加
+        }
+    }
+    test.onscroll=function () {
+        var clientH;
+        if(test.currentStyle){
+// 适用于IE
+            clientH = parseInt(test.currentStyle.height);
+        } else {
+// 适用于IE
+            clientH = parseInt(getComputedStyle(test, false).height);
+        }
+        console.log()
+        var scrollT=test.scrollTop;
+        console.log("test卷上去的高度"+scrollT);
+        console.log("testgaio"+test.scrollHeight);
+        if(scrollT+clientH>=test.scrollHeight){
+            console.log("到达test底部可以加载一些DOM了");
+        }
+
+    }
+//    window.onscroll=function () {
+//        show();
+//    }
+//console.log("divshi"+div.scrollHeight);
+//    console.log("divshi"+document.documentElement.scrollHeight);
+function scrolling(){
+    var clients = document.body.clientHeight || document.documentElement
+            .clientHeight || window.innerHeight;
+//    浏览器可视区高度
+    /*
+    *
+    * scrollTop = document.body.scrollTop // 在firefox上为0 ,
+
+     scrollTop = document.documentElement.scrollTop // chrome为0
+
+     // 兼容写法
+
+     scrollTop = Math.max(document.body.scrollTop,document.documentElement.scrollTop)*/
+    var scrollH=document.body.scrollHeight||document.documentElement.scrollHeight;
+//    console.log("body"+scrollH);
+    var top=document.documentElement.scrollTop||document.body.scrollTop;
+    if(clients+top>=scrollH)
+    {
+        console.log("daodibu"+scrollH)
+    }
+    if(top==0)
+    {
+        console.log("zaidingbu")
+    }
+
+}
+ function divScroll() {
+    var divheight=test.scrollHeight;
+    var top=test.scrollTop;
+     if(test.currentStyle){
+// 适用于IE
+         var clientH = parseInt(test.currentStyle.height);
+     } else {
+// 适用于IE
+         var clientH = parseInt(getComputedStyle(test, false).height);
+     }
+//     获取height值设置的
+ }
+//window.onscroll=scrolling;
+
+//    脱离文档流的不可以计算但是脱离文档流就不会在回流解决了一些性能问题
+//计算滚动轴的宽度
+
+/*
+* jquery：width（）height（""）设置值width对于window和document是不可写只能读width和height是无单位纯数字
+* innerwidth()innerheight()对于window和document是不可写border+padding+width
+* outerwidth()outerheight()对于window和document是不可写传true包括margin不传不包括
+*
+* */
+
+</script>
+</body>
+</html>

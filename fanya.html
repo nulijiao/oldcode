@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body,html {
+            height: 100%;
+        }
+        body {
+            /*perspective 属性指定了观察者与z=0平面的距离，使具有三维位置变换的元素产生透视效果。z>0的三维元素比正常大，而z<0时则比正常小，大小程度由该属性的值决定。默认情况下，消失点位于元素的中心，但是可以通过设置perspective-origin属性来改变其位置。*/
+            -webkit-perspective: 1000px;
+            -moz-perspective: 1000px;
+            -ms-perspective: 1000px;
+            perspective: 3000px;
+            background-color: #212121;
+            font-family: '微软雅黑';
+        }
+
+        .preserve-3d {
+            /*transform-style属性指定了，该元素的子元素是（看起来）位于三维空间内，还是在该元素所在的平面内被扁平化。*/
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        .container div{
+            width: 200px;
+            height: 200px;
+            /*background-color: red;*/
+            position: absolute;
+            top:0;
+            left:0;
+            outline:1px solid transparent;
+            /*outline:1px solid transparent;上诉图片 蓝色的 设置了起始旋转30度，火狐下明显有锯齿。别的浏览器没有很仔细的观察，这是加个属性  outline:1px solid transparent;
+
+<div class="front " style="outline:1px solid transparent;background:blue; color:#fff; -moz-transform: rotateY(30deg);overflow:hidden;">前面 针对火狐 outline:1px solid transparent用于消除锯齿</div>
+*/
+            border: 1px solid #ccc;
+            border-left:5px solid white;
+            border-radius: 10px;
+            transform-origin: left;
+            transition: all linear 5s;
+        }
+        .container div:nth-child(1){
+            transform: rotateX(370deg);
+            background-image: url("resource/img/102.jpg");
+            background-repeat:no-repeat;
+            background-size:contain;
+            -webkit-background-size:100% 100%;
+
+        }
+        .container div:nth-child(2){
+            transform: rotateX(370deg) rotateY(-2deg); ;
+            background-image: url("resource/img/17.jpeg");
+            background-repeat:no-repeat;
+            background-size:contain;
+            -webkit-background-size:100% 100%;
+
+        }
+        .container div:nth-child(3){
+            transform: rotateX(370deg) rotateY(-2deg);;
+            background-image: url("resource/img/20.jpeg");
+            background-repeat:no-repeat;
+            background-size:contain;-webkit-background-size:100% 100%;
+
+        }
+        .container div:nth-child(4){
+            transform: rotateX(370deg) rotateY(-2deg);
+            background-image: url("resource/img/21.jpeg");
+            background-repeat:no-repeat;
+            /*background-size:contain*/
+            -webkit-background-size:100% 100%;
+
+        }
+        .container div:nth-child(5){
+            transform: rotateX(370deg) rotateY(-2deg); ;
+            background-image: url("resource/img/12.jpeg");
+            background-repeat:no-repeat;
+            background-size:contain;
+            -webkit-background-size:100% 100%;
+           }
+        .container{
+            position: relative;
+            margin:20%;
+            left:20%;
+            top:20%;
+        }
+        .container:hover div:nth-child(1){
+            transform: rotateX(370deg) ;
+            border-left:5px double whitesmoke;
+            /*border-radius: 29px 5px 5px 29px;*/
+        }
+        .container:hover div:nth-child(2){
+            transform: rotateX(370deg)  rotateY(-180deg);
+            transition-delay: 6s;
+            border-left:5px double whitesmoke;
+            z-index: 3;
+            width: 204px;
+            /*border-radius: 29px 5px 5px 29px;*/
+        }
+        .container:hover div:nth-child(3){
+            transform: rotateX(370deg)  rotateY(-180deg);
+            transition-delay: 4s;
+            border-left:5px double whitesmoke;
+            z-index: 2;
+            width: 205px;
+            /*border-radius: 29px 5px 5px 29px;*/
+        }
+        .container:hover div:nth-child(4){
+            transform: rotateX(370deg)  rotateY(-180deg);
+            transition-delay: 2s;
+            z-index: 1;
+            width: 206px;
+            border-left:5px double whitesmoke;
+            /*border-radius:29px 5px 5px 29px;*/
+        }
+        .container:hover div:nth-child(5){
+            transform: rotateX(370deg)  rotateY(-180deg);
+            z-index: 0;
+            /*border-radius: 29px 5px 5px 29px;*/
+            width: 207px;
+            border-left:5px double whitesmoke;
+        }
+        .container:hover div:nth-child(6){
+            transform: rotateX(370deg)  rotateY(-180deg);
+            z-index: -1;
+
+
+        }
+        @keyframes   change{
+
+        }
+    </style>
+</head>
+<body>
+<div class="container preserve-3d" style="width: 80%;margin:20% 10%">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+</div>
+</body>
+</html>
